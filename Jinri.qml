@@ -10,6 +10,7 @@ import QtQuick.Layouts
 // https://github.com/UWillno/QWMC_template
 Item {
     id:root
+    transformOrigin:Item.TopLeft
     // 需要自定义的属性放这里
     // 虽然也不是不能获取子控件的属性，但你写太多层改得时候麻烦，也费性能
     // Customized properties go here
@@ -26,9 +27,10 @@ Item {
 
     //　这是个虚拟自定义位置，我不在这里！
     //　This is a virtual custom location, I'm not here!
-    property string workSpcae: "武汉市精神卫生中心六角亭院区"
-    property string workContent: "各点位巡查"
-    property string location: "武汉市精神卫生中心六角亭院区"
+    property string workSpcae: "武汉市精神卫生中心(六角亭院区)"
+    property string workContent: "吃饭睡觉"
+    property string location: "武汉市精神卫生中心(六角亭院区)"
+    property real pointSize: 14
     // 自带osm其实可以请求中国地址，但是容易被墙，你可能需要使用网络代理，而且我觉得应该不太需要这个功能？
     // 可以通过其它api来请求地址名称 直接使用xmlhttprequest
     // The included osm can actually request a Chinese address, but it's easily walled, you'll probably need to use a web proxy, and I don't think it's a feature that should be needed much?
@@ -57,19 +59,19 @@ Item {
     // 不需要可以放子控件 避免属性被误改
     // You can put subcontrols if you don't need them, to avoid misplaced properties.
 
-    // QOrientationReading::Undefined	0	The Orientation is unknown.
+    // QOrientationReading::Undefined     0     The Orientation is unknown.
     // 未知 传感器未启动？ Sensor not activated?
-    // QOrientationReading::TopUp	1	The Top edge of the device is pointing up.
+    // QOrientationReading::TopUp   1     The Top edge of the device is pointing up.
     // 顶部在上
-    // QOrientationReading::TopDown	2	The Top edge of the device is pointing down.
+    // QOrientationReading::TopDown 2     The Top edge of the device is pointing down.
     // 顶部在下
-    // QOrientationReading::LeftUp	3	The Left edge of the device is pointing up.
+    // QOrientationReading::LeftUp  3     The Left edge of the device is pointing up.
     // 左边缘在上
-    // QOrientationReading::RightUp	4	The Right edge of the device is pointing up.
+    // QOrientationReading::RightUp 4     The Right edge of the device is pointing up.
     // 右边缘在上
-    // QOrientationReading::FaceUp	5	The Face of the device is pointing up.
+    // QOrientationReading::FaceUp  5     The Face of the device is pointing up.
     // 面向上
-    // QOrientationReading::FaceDown	6	The Face of the device is pointing down.
+    // QOrientationReading::FaceDown      6     The Face of the device is pointing down.
     // 面向下
 
     // 个人认为只需要处理 1 3 4默认竖屏
@@ -161,7 +163,7 @@ Item {
             fontSizeMode: Text.Fit
             font.bold: true
             color:"white"
-            font.pointSize: 12
+            font.pointSize: pointSize
             // minimumPointSize: 20
             padding: 5
             elide: Text.ElideRight
@@ -173,16 +175,15 @@ Item {
                 topLeftRadius: 10
                 topRightRadius: 10
                 opacity: 0.7
-
-                Rectangle{
-                    color:"orange"
-                    width: 10
-                    height: 10
-                    radius: 5
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: parent.left
-                    anchors.leftMargin: 10
-                }
+            }
+            Rectangle{
+                color:"#FFBF00"
+                width: 10
+                height: 10
+                radius: 5
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 10
             }
         }
         RowLayout {
@@ -191,7 +192,7 @@ Item {
             Text {
                 text:"工 作 区 域："
                 color:"black"
-                font.pointSize: 12
+                font.pointSize: pointSize
                 padding: 2
                 rightPadding: 0
                 leftPadding: 5
@@ -201,7 +202,7 @@ Item {
                 text:workSpcae
                 color:"black"
                 Layout.fillWidth: true
-                font.pointSize: 12
+                font.pointSize: pointSize
                 padding: 2
                 wrapMode: Text.WrapAnywhere
                 maximumLineCount: 2
@@ -217,7 +218,7 @@ Item {
                 Layout.alignment: Qt.AlignTop
                 text:"工 作 内 容："
                 color:"black"
-                font.pointSize: 12
+                font.pointSize: pointSize
                 padding: 2
                 rightPadding: 0
                 leftPadding: 5
@@ -227,7 +228,7 @@ Item {
                 text: workContent
                 color:"black"
                 Layout.fillWidth: true
-                font.pointSize: 12
+                font.pointSize: pointSize
                 padding: 2
                 wrapMode: Text.WrapAnywhere
                 maximumLineCount: 2
@@ -237,12 +238,12 @@ Item {
 
         RowLayout {
             Layout.fillWidth: true
-            Layout.alignment: Qt.AlignTop
             spacing: 0
             Text {
+                Layout.alignment: Qt.AlignTop
                 text:"拍 摄 时 间："
                 color:"black"
-                font.pointSize: 12
+                font.pointSize: pointSize
                 padding: 2
                 rightPadding: 0
                 leftPadding: 5
@@ -252,7 +253,7 @@ Item {
                 text:formattedDate +" "+ timeStr
                 color:"black"
                 Layout.fillWidth: true
-                font.pointSize: 12
+                font.pointSize: pointSize
                 padding: 2
                 wrapMode: Text.WrapAnywhere
                 maximumLineCount: 2
@@ -265,9 +266,9 @@ Item {
             spacing: 0
             Text {
                 Layout.alignment: Qt.AlignTop
-                text:"地         点："
+                text:"地          点："
                 color:"black"
-                font.pointSize: 12
+                font.pointSize: pointSize
                 padding: 2
                 rightPadding: 0
                 leftPadding: 5
@@ -277,7 +278,7 @@ Item {
                 text:`${osmEnabled && osmAddress!==undefined  ? firstAddress(osmAddress.text) : location}`
                 color:"black"
                 Layout.fillWidth: true
-                font.pointSize: 12
+                font.pointSize: pointSize
                 padding: 2
                 wrapMode: Text.WrapAnywhere
                 maximumLineCount: 2
@@ -304,59 +305,79 @@ Item {
     // 右水印 一般是logo然后什么真实拍照
     // The right watermark is usually a logo and then something real photographed.
     Column {
-        id:rightItem
-        rotation : 0
-        x:root.width - width
-        y:root.height - height
+        id: rightItem
+        x: root.width - width - 2
+        y: root.height - height -2
         transformOrigin: Item.BottomRight
         spacing: 5
 
-        Text{
-            text:"今日水印"
-            anchors.horizontalCenter: parent.horizontalCenter
+        width: Math.max(
+                   logoLabel.implicitWidth,
+                   name.implicitWidth + 4 + verify.implicitWidth
+                   // security.implicitWidth
+                   )
+
+        Text {
+            id: logoLabel
+            width: parent.width
+            text: "今日水印"
             color: "white"
-            font.pointSize: 12
+            font.pointSize: pointSize + 2
             font.bold: true
             font.letterSpacing: 2
+            horizontalAlignment: Text.AlignLeft
+            style: Text.Outline
+            styleColor: "#66000000"
         }
 
         Row {
+            width: parent.width
             spacing: 4
-            anchors.horizontalCenter: parent.horizontalCenter
-            // width: parent.width
+
             Text {
                 id: name
-                font.bold: true
                 text: "相机"
-                color:"white"
-                font.pointSize: 8
-            }
-            Text {
-                font.pointSize: 8
+                color: "white"
+                font.pointSize: pointSize -4
                 font.bold: true
-                text: "真实可验"
-                font.letterSpacing: 2
-                color:"black"
-                z:1
-                Rectangle{
-                    // anchors.fill: parent
-                    width: parent.width+4
-                    height: parent.height
-                    x:-2
+                style: Text.Outline
+                styleColor: "#66000000"
+            }
 
-                    color:"white"
-                    radius:2
-                    z:-1
+            Text {
+                id: verify
+                text: "真实可验"
+                color: "#1A1A1A"
+                font.pointSize: pointSize -4
+                font.bold: true
+                font.letterSpacing: 2
+                // style: Text.Outline
+                // styleColor: "gray"
+                Rectangle {
+                    anchors.fill: parent
+                    anchors.margins: -2
+                    color: "white"
+                    opacity: 0.5
+                    radius: 2
+                    z: -1
                 }
             }
         }
-        Text{
-            text:"防伪 "+ Qt.md5(formattedDate).substring(0, 14).toUpperCase()
-            anchors.horizontalCenter: parent.horizontalCenter
+
+        Text {
+            id: security
+            width: parent.width
+            text: "防伪 " + Qt.md5(timeStr).substring(0, 14).toUpperCase()
+            color: "white"
+            font.pointSize: pointSize -4
             font.bold: true
-            color:"white"
-            font.pointSize: 8
+            fontSizeMode: Text.Fit
+            minimumPointSize: 1
+            horizontalAlignment: Text.AlignRight
+            style: Text.Outline
+            styleColor: "#66000000"
         }
+
         DragHandler {
             acceptedButtons: Qt.AllButtons
         }

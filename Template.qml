@@ -9,6 +9,7 @@ import QtQuick.Layouts
 // https://github.com/UWillno/QWMC_template
 Item {
     id:root
+    transformOrigin:Item.TopLeft // 非帧截取不要动
     // 需要自定义的属性放这里
     // 虽然也不是不能获取子控件的属性，但你写太多层改得时候麻烦，也费性能
     // Customized properties go here
