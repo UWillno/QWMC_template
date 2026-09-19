@@ -30,3 +30,13 @@ To the actual program shall prevail, the test process may be deleted from the fu
 ![ori3](./ori3.jpg)
 ![ori4](./ori4.jpg)
 ![16:9](./16比9.jpg)
+
+## 0.0.2
+
+详细变化可见[QML水印相机安卓版0.0.2开发记录](https://uwillno.com/blog/QML水印相机安卓版0.0.2开发记录)
+
+![](./保存无水印.png)
+
+![](./分辨率.png)
+
+![](./属性设置.png)
